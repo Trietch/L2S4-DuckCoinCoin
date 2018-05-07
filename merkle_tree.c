@@ -11,8 +11,8 @@
  * STRUCT _ELEM (aka ELEM) *                                      *
  ***************************                                      *
  *                                                                *
- * 	data : Chaine de caractère contenant des hash                 *
- * 	next : Pointeur vers le prochain élément de la file           *
+ *  data : Chaine de caractère contenant des hash                 *
+ *  next : Pointeur vers le prochain élément de la file           *
  *                                                                *
  ******************************************************************/
 
@@ -27,8 +27,8 @@ typedef struct _Elem
  * STRUCT _QUEUE (aka QUEUE) *                                    *
  *****************************                                    *
  *                                                                *
- * 	first : Pointeur vers l'élément en tête de la file            *
- * 	size  : Nombre d'éléments de la file                          *
+ *  first : Pointeur vers l'élément en tête de la file            *
+ *  size  : Nombre d'éléments de la file                          *
  *                                                                *
  ******************************************************************/
 
@@ -43,7 +43,7 @@ typedef struct _Queue
  * QUEUE_CREATE *                                                 *
  ****************                                                 *
  *	                                                              *
- *	Creer une file.                                               *
+ *  Creer une file.                                               *
  *	                                                              *
  *  Return : Queue                                                *
  *                                                                *
@@ -64,7 +64,7 @@ Queue *queue_create()
  * QUEUE_ADD *                                                    *
  *************                                                    *
  *	                                                              *
- *	Ajoute la chaine de caractère (data) a la file (q).           *
+ *  Ajoute la chaine de caractère (data) a la file (q).           *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -98,8 +98,8 @@ void queue_add(Queue *q, char *data)
  * GENERATE_QUEUE *                                               *
  ******************                                               *
  *	                                                              *
- *	Genere une file avec la liste des transactions                *
- *	(transaction_list). La file ne peut etre que de taille paire. *
+ *  Genere une file avec la liste des transactions                *
+ *  (transaction_list). La file ne peut etre que de taille paire. *
  *	                                                              *
  *  Return : Queue                                                *
  *                                                                *
@@ -130,7 +130,7 @@ Queue *generate_queue(Transaction **transaction_list, unsigned long transaction_
  * QUEUE_DEL *                                                    *
  *************                                                    *
  *	                                                              *
- *	Supprime l'élément en tête de la file (q) et le renvoie.      *
+ *  Supprime l'élément en tête de la file (q) et le renvoie.      *
  *	                                                              *
  *  Return : char*                                                *
  *                                                                *
@@ -152,10 +152,10 @@ char *queue_del(Queue *q)
  * GENERATE_MERKLE_HASH *                                         *
  ************************                                         *
  *                                                                *
- * 	Genere le merkle hash de la file (q).                         *
- * 	Pour cela la fonction calcul le hash de la concaténation des  *
- * 	deux premiers éléments de la file et l'ajoute a la fin de la  *
- * 	file, jusqu'a que la file n'ai plus qu'un seul élément.       *
+ *  Genere le merkle hash de la file (q).                         *
+ *  Pour cela la fonction calcul le hash de la concaténation des  *
+ *  deux premiers éléments de la file et l'ajoute a la fin de la  *
+ *  file, jusqu'a que la file n'ai plus qu'un seul élément.       *
  *	                                                              *
  *  Return : char*                                                *
  *                                                                *
@@ -195,8 +195,8 @@ char *generate_merkle_hash(Queue *q)
  * GET_MERKLE_ROOT *                                              *
  *******************                                              *
  *                                                                *
- *	Retourne le merkle hash de la liste des transactions          *
- *	(transaction_list).                                           *
+ *  Retourne le merkle hash de la liste des transactions          *
+ *  (transaction_list).                                           *
  *	                                                              *
  *  Return : char*                                                *
  *                                                                *

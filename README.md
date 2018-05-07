@@ -2,21 +2,21 @@
 ## L2 Informatique Université Paul Sabatier
 #### Auteur/Etudiant : Tristan Marrec :shipit: | Tuteur : Stergos Afantenos
 
-✔️  Generation d'une blockchain
+✔️  Génération d'une blockchain
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG
 ```
 
-✔️  Generation d'une blockchain avec cheating d'un block
+✔️  Génération d'une blockchain avec cheating d'un block
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_NB
 ```
 
-✔️  Generation d'une blockchain avec cheating d'une transaction
+✔️  Génération d'une blockchain avec cheating d'une transaction
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_TRANSACTION_NB TRANSACTION_TO_CHEAT_NB
 ```
-🚧 (non fini) Generation d'une blockchain a partir d'un fichier JSON
+🚧 (non fini) Génération d'une blockchain a partir d'un fichier JSON
 ```
 ./duckcoincoin JSON_FILE
 ```

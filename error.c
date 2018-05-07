@@ -7,8 +7,8 @@
  * ERROR_REPORT *                                                 *
  ****************                                                 *
  *	                                                              *
- *	Affiche l'erreur rencontrée et arrete l'éxécution du          *
- *	programme.	                                                  *
+ *  Affiche l'erreur rencontrée et arrete l'éxécution du          *
+ *  programme.	                                                  *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *

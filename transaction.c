@@ -9,7 +9,7 @@
  * STRUCT _TRANSACTION (aka TRANSACTION) *                        *
  *****************************************                        *
  *                                                                *
- * 	amount : Montant de la transaction                            *
+ *  amount : Montant de la transaction                            *
  *                                                                *
  ******************************************************************/
 
@@ -23,7 +23,7 @@ typedef struct _Transaction
  * TRANSACTION_PRINT *                                            *
  *********************                                            *
  *	                                                              *
- *	Affiche la transaction.                                       *
+ *  Affiche la transaction.                                       *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -39,7 +39,7 @@ void transaction_print(Transaction *transaction)
  * TRANSACTION_CREATE *                                           *
  **********************                                           *
  *	                                                              *
- *	Creer une transaction avec comme champ montant (amount).      *
+ *  Creer une transaction avec comme champ montant (amount).      *
  *	                                                              *
  *  Return : Transaction*                                         *
  *                                                                *
@@ -63,8 +63,8 @@ Transaction *transaction_create(unsigned long amount)
  * GENERATE_RANDOM_TRANSACTION *                                  *
  *******************************                                  *
  *	                                                              *
- *	Creer une transaction avec comme champ montant un nombre      *
- *	aléatoire compris entre 0 et (RANDOM_MAX_TRANSACTIONS).       *
+ *  Creer une transaction avec comme champ montant un nombre      *
+ *  aléatoire compris entre 0 et (RANDOM_MAX_TRANSACTIONS).       *
  *	                                                              *
  *  Return : Transaction*                                         *
  *                                                                *
@@ -80,11 +80,11 @@ Transaction *generate_random_transaction()
  * GENERATE_RANDOM_TRANSACTION_LIST *                             *
  ************************************                             *
  *	                                                              *
- *	Creer une liste de transactions avec comme champ montant      *
- *	un nombre aléatoire compris entre 0 et                        *
- *	(RANDOM_MAX_TRANSACTIONS).                                    *
- *	Cette liste est de taile comprise entre (TRANSACTIONS_MIN) et *
- *	(TRANSACTION_MAX).                                            *
+ *  Creer une liste de transactions avec comme champ montant      *
+ *  un nombre aléatoire compris entre 0 et                        *
+ *  (RANDOM_MAX_TRANSACTIONS).                                    *
+ *  Cette liste est de taile comprise entre (TRANSACTIONS_MIN) et *
+ *  (TRANSACTION_MAX).                                            *
  *	                                                              *
  *  Return : Transaction**                                        *
  *                                                                *

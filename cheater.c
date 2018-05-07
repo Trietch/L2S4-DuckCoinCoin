@@ -12,9 +12,9 @@
  * BLOCK_CHEATER *                                                *
  *****************                                                *
  *	                                                              *
- *	Supprime le n-ième (num) block de la blockchain (b) et        *
- *	recalcule tout les hash des blocks suivants pour que l'on ne  *
- *	puisse pas detecter la suppression de ce block.	              *
+ *  Supprime le n-ième (num) block de la blockchain (b) et        *
+ *  recalcule tout les hash des blocks suivants pour que l'on ne  *
+ *  puisse pas detecter la suppression de ce block.	              *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -39,10 +39,10 @@ void block_cheater(Blockchain *b, unsigned long num)
  * TRANSACTION_CHEATER *                                          *
  ***********************                                          *
  *	                                                              *
- *	Supprime la n-ième (num_transaction) transaction du n_ième    *
- *	(num_block) block de la blockchain (b) et recalcule tout les  *
- *	hash des blocks suivants pour que l'on ne puisse pas detecter *
- *	la suppression de la transaction.                             *
+ *  Supprime la n-ième (num_transaction) transaction du n_ième    *
+ *  (num_block) block de la blockchain (b) et recalcule tout les  *
+ *  hash des blocks suivants pour que l'on ne puisse pas detecter *
+ *  la suppression de la transaction.                             *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *

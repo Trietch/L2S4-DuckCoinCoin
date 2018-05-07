@@ -12,7 +12,7 @@
  * STRUCT _BLOCKCHAIN (aka BLOCKCHAIN) *                          *
  ***************************************                          *
  *                                                                *
- * 	first_block   : Premier Block de la Blockchain                *
+ *  first_block   : Premier Block de la Blockchain                *
  * 	difficulty    : Difficulté de la Blockchain                   *
  * 	number_blocks : Nombre de Blocks de la Blockchain             *
  *                                                                *
@@ -30,8 +30,8 @@ typedef struct _Blockchain
  * BLOCKCHAIN_CREATE *                                            *
  *********************                                            *
  *	                                                              *
- *	Initialise la structure de données Blockchain avec la         *
- *	difficulté (difficulty) et creer le block genesis.            *
+ *  Initialise la structure de données Blockchain avec la         *
+ *  difficulté (difficulty) et creer le block genesis.            *
  *	                                                              *
  *  Return : Blockchain*                                          *
  *                                                                *
@@ -64,8 +64,8 @@ Blockchain *blockchain_create(unsigned long difficulty)
  * BLOCKCHAIN_FREE *                                              *
  *******************                                              *
  *	                                                              *
- *	Vide de la mémoire tout les blocks de la blockchain et la     *
- *	blockchain elle même.                                         *
+ *  Vide de la mémoire tout les blocks de la blockchain et la     *
+ *  blockchain elle même.                                         *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -82,7 +82,7 @@ void blockchain_free(Blockchain *b)
  * GET_DIFFICULTY *                                               *
  ******************                                               *
  *	                                                              *
- *	Retourne la difficulté de la blockchain (b).                  *
+ *  Retourne la difficulté de la blockchain (b).                  *
  *	                                                              *
  *  Return : unsigned long                                        *
  *                                                                *
@@ -98,7 +98,7 @@ unsigned long get_difficulty(Blockchain *b)
  * DEC_BLOCKCHAIN *                                               *
  ******************                                               *
  *	                                                              *
- *	Décrémente le champ nombre de block de la blockchain (b).     *
+ *  Décrémente le champ nombre de block de la blockchain (b).     *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -114,7 +114,7 @@ void dec_blockchain(Blockchain *b)
  * GET_NUMBER_BLOCKS *                                            *
  *********************                                            *
  *	                                                              *
- *	Retourne le nombre de blocks de la blockchain (b).            *
+ *  Retourne le nombre de blocks de la blockchain (b).            *
  *	                                                              *
  *  Return : unsigned long                                        *
  *                                                                *
@@ -130,9 +130,9 @@ unsigned long get_number_blocks(Blockchain *b)
  * BLOCKCHAIN_ADD_BLOCK *                                         *
  ************************                                         *
  *	                                                              *
- *	Ajoute un block à la blochain (blockchain) avec n             *
- *	(transaction_nb) transactions de transaction_list et          * 
- *	incrémente le champ du nombre de block de la blockchain.      *
+ *  Ajoute un block à la blochain (blockchain) avec n             *
+ *  (transaction_nb) transactions de transaction_list et          * 
+ *  incrémente le champ du nombre de block de la blockchain.      *
  *	                                                              *
  *  Return : Blockchain*                                          *
  *                                                                *
@@ -150,8 +150,8 @@ Blockchain *blockchain_add_block(Blockchain *blockchain, Transaction **transacti
  * BLOCKCHAIN_PRINT *                                             *
  ********************                                             *
  *	                                                              *
- *	Affiche les champs de la blockchain (blockchain) et les       *
- *	champs de tout les blocks de cette blockchain.                *
+ *  Affiche les champs de la blockchain (blockchain) et les       *
+ *  champs de tout les blocks de cette blockchain.                *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -170,7 +170,7 @@ void blockchain_print(Blockchain *blockchain)
  * GET_FIRST_BLOCK *                                              *
  *******************                                              *
  *	                                                              *
- *	Retourne le premier block de la Blockchain (blockchain).      *
+ *  Retourne le premier block de la Blockchain (blockchain).      *
  *	                                                              *
  *  Return : Block*                                               *
  *                                                                *

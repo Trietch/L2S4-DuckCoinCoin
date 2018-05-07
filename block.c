@@ -14,14 +14,14 @@
  * STRUCT _BLOCK (aka BLOCK) *                                    *
  *****************************                                    *
  *                                                                *
- * 	transaction_list    : Liste des transactions                  *
- * 	next                : Pointeur du prochain Block              *
- * 	prev_hash           : String du hash du Block précédent       *
- * 	hash                : String du hash du Block                 *
- * 	timestamp           : String de la date actuelle              *
- * 	index               : Numéro du Block                         *
- * 	nonce               : Nonce du Block (utilisé pour le minage) *
- * 	number_transactions : Nombre de transactions dans le Block    *
+ *  transaction_list    : Liste des transactions                  *
+ *  next                : Pointeur du prochain Block              *
+ *  prev_hash           : String du hash du Block précédent       *
+ *  hash                : String du hash du Block                 *
+ *  timestamp           : String de la date actuelle              *
+ *  index               : Numéro du Block                         *
+ *  nonce               : Nonce du Block (utilisé pour le minage) *
+ *  number_transactions : Nombre de transactions dans le Block    *
  *                                                                *
  ******************************************************************/
 
@@ -43,7 +43,7 @@ typedef struct _Block
  * GETTIMESTAMP *                                                 *
  ****************                                                 *
  *	                                                              *
- *	Retourne une chaine de caractères contenant la date actuelle. *
+ *  Retourne une chaine de caractères contenant la date actuelle. *
  *	                                                              *
  *  Return : char*                                                *
  *                                                                *
@@ -65,8 +65,8 @@ char *getTimeStamp()
  * BLOCK_TO_STRING *                                              *
  *******************                                              *
  *	                                                              *
- *	Crée une chaine de caractères (string_block) en concatenant   *
- *	tout les champs du block (block).                             *
+ *  Crée une chaine de caractères (string_block) en concatenant   *
+ *  tout les champs du block (block).                             *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -88,8 +88,8 @@ void block_to_string(Block *block, char *string_block)
  * BLOCK_CREATE *                                                 *
  ****************                                                 *
  *	                                                              *
- *	Initialise la structure de données Block avec les champs      *
- *	données en entrée et en en calculants (les hashs).            *
+ *  Initialise la structure de données Block avec les champs      *
+ *  données en entrée et en en calculants (les hashs).            *
  *	                                                              *
  *  Return : Block*                                               *
  *                                                                *
@@ -118,7 +118,7 @@ Block *block_create(unsigned long index, char *prev_hash, Transaction **transact
  * BLOCK_SIGN_HASH *                                              *
  *******************                                              *
  *	                                                              *
- *	Met le hash (hash) dans le champ hash du block (b).           *
+ *  Met le hash (hash) dans le champ hash du block (b).           *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -134,9 +134,9 @@ void block_sign_hash(Block *b, char *hash)
  * IS_GOOD_HASH *                                                 *
  ****************                                                 *
  *	                                                              *
- *	Verifie que le hash (hash) respecte bien la difficulté        * 
- *	(difficulty). La fonction verifie donc si il y a n            *
- *	(difficulty) charactère '0' d'affilé au debut du hash.        *
+ *  Verifie que le hash (hash) respecte bien la difficulté        * 
+ *  (difficulty). La fonction verifie donc si il y a n            *
+ *  (difficulty) charactère '0' d'affilé au debut du hash.        *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
@@ -157,8 +157,8 @@ bool is_good_hash(char *hash, unsigned long difficulty)
  * GET_LAST_BLOCK *                                               *
  ******************                                               *
  *	                                                              *
- *	Retourne le premier block qui n'a pas de prochain block à     *
- *	partir du block (block).                                      *
+ *  Retourne le premier block qui n'a pas de prochain block à     *
+ *  partir du block (block).                                      *
  *	                                                              *
  *  Return : Block*                                               *
  *                                                                *
@@ -182,10 +182,10 @@ Block *get_last_block(Block *block)
  * BLOCK_ADD *                                                    *
  *************                                                    *
  *	                                                              *
- *	Ajoute un block au block (block), ce nouveau block ayant      *
- *	n (transaction_nb) transactions qui sont (transaction_list).  *
- *	Cherche une bonne nonce pour le block pour avoir un hash      *
- *	valide avec la difficulté (difficulty).                       *
+ *  Ajoute un block au block (block), ce nouveau block ayant      *
+ *  n (transaction_nb) transactions qui sont (transaction_list).  *
+ *  Cherche une bonne nonce pour le block pour avoir un hash      *
+ *  valide avec la difficulté (difficulty).                       *
  *	                                                              *
  *  Return : Block*                                               *
  *                                                                *
@@ -229,8 +229,8 @@ Block *block_add(Block *block, unsigned long difficulty, Transaction **transacti
  * IS_GENESIS *                                                   *
  **************                                                   *
  *	                                                              *
- *	La fonction regarde si le champ merkle hash du block (b) est  * 
- *	"genesis" ou pas.                                             *
+ *  La fonction regarde si le champ merkle hash du block (b) est  * 
+ *  "genesis" ou pas.                                             *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
@@ -246,10 +246,10 @@ bool is_genesis(Block *b)
  * IS_PREV_HASH_VALID *                                           *
  **********************                                           *
  *	                                                              *
- *	Compare le champ prev hash du prochain block du block (b)     * 
- *	avec le champ hash du block (b).                              *
- *	S'ils sont identiques, alors le hash est valide et la         *
- *	fonction retourne true.                                       *
+ *  Compare le champ prev hash du prochain block du block (b)     * 
+ *  avec le champ hash du block (b).                              *
+ *  S'ils sont identiques, alors le hash est valide et la         *
+ *  fonction retourne true.                                       *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
@@ -281,10 +281,10 @@ bool is_prev_hash_valid(Block *b)
  * IS_MERKLE_ROOT_VALID *                                         *
  ************************                                         *
  *	                                                              *
- *	Compare le champ merkle hash du block (b) avec le merkle hash *
- *	que la fonction calcule du block (b).                         *
- *	S'ils sont identiques, alors le hash est valide et la         *
- *	fonction retourne true.                                       *
+ *  Compare le champ merkle hash du block (b) avec le merkle hash *
+ *  que la fonction calcule du block (b).                         *
+ *  S'ils sont identiques, alors le hash est valide et la         *
+ *  fonction retourne true.                                       *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
@@ -318,9 +318,9 @@ bool is_merkle_root_valid(Block *b)
  * IS_MY_HASH_VALID *                                             *
  ********************                                             *
  *	                                                              *
- *	Compare le champ hash du block (b) avec le hash que la        *
- *	fonction calcule du block (b). S'ils sont identiques, alors   *
- *	le hash est valide et la fonction retourne true.              *
+ *  Compare le champ hash du block (b) avec le hash que la        *
+ *  fonction calcule du block (b). S'ils sont identiques, alors   *
+ *  le hash est valide et la fonction retourne true.              *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
@@ -362,8 +362,8 @@ bool is_my_hash_valid(Block *b)
  * GET_ITH_BLOCK *                                                *
  *****************                                                *
  *	                                                              *
- *	Retourne le pointeur du n-ième (num) block a partir du block  *
- *	(b).                                                          *
+ *  Retourne le pointeur du n-ième (num) block à partir du block  *
+ *  (b).                                                          *
  *	                                                              *
  *  Return : Block*                                               *
  *                                                                *
@@ -384,7 +384,7 @@ Block *get_ith_block(Block *b, unsigned long num)
  * BLOCK_DEL_ALL_TRANSACTION *                                    *
  *****************************                                    *
  *	                                                              *
- *	Supprime toutes les transactions du block (b).                *
+ *  Supprime toutes les transactions du block (b).                *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -404,7 +404,7 @@ void block_del_all_transaction(Block *b)
  * BLOCK_ALL_DELETE *                                             *
  ********************                                             *
  *	                                                              *
- *	Supprime tout les blocks a partir du block (b).               *
+ *  Supprime tout les blocks à partir du block (b).               *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -431,7 +431,7 @@ void block_all_delete(Block *b)
  * BLOCK_DEL_TRANSACTION *                                        *
  *************************                                        *
  *	                                                              *
- *	Supprime la n-ième (trans_nb) transactions du block (b).      *
+ *  Supprime la n-ième (trans_nb) transactions du block (b).      *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *
@@ -449,8 +449,8 @@ void block_del_transaction(Block *b, unsigned long trans_nb)
 }
 
 /******************************************************************
- * BLOCK_JUMP *                                                   *
- **************                                                   *
+ * BLOCK_JUMP_NEXT *                                              *
+ *******************                                              *
  *	                                                              *
  *  Modifie le pointeur du prochain block du block (b) en le      *
  *  remplaçant par le prochain block du prochain block.	          *
@@ -520,10 +520,10 @@ void blockchain_rebuild(Block *b, unsigned long difficulty, unsigned long nb_blo
  * BLOCK_PRINT *                                                  *
  ***************                                                  *
  *                                                                *
- *	Affiche les champs de tout les blocks à partir du block en    *
- *	entrée (block).                                               *
+ *  Affiche les champs de tout les blocks à partir du block en    *
+ *  entrée (block).                                               *
  *	                                                              *
- *	Return : void                                                 *
+ *  Return : void                                                 *
  *                                                                *
  ******************************************************************/
 
@@ -556,10 +556,10 @@ void block_print(Block *block)
  * EXPORT_BLOCK *                                                 *
  ****************                                                 *
  *                                                                *
- *	Convertis les n (nb_blocks) blocks (block) en JSON et         *
- *	l'écrit dans le fichier (file).                               *
+ *  Convertit les n (nb_blocks) blocks (block) en JSON et         *
+ *  les écrits dans le fichier (file).                            *
  *	                                                              *
- *	Return : void                                                 *
+ *  Return : void                                                 *
  *                                                                *
  ******************************************************************/
 

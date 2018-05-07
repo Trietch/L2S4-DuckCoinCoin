@@ -8,7 +8,7 @@
  * GET_DIFFICULTY_FILE *                                          *
  ***********************                                          *
  *                                                                *
- *	Récupère la difficulté dans le fichier (file_temp).           *
+ *  Récupère la difficulté dans le fichier (file_temp).           *
  *	                                                              *
  *  Return : unsigned long                                        *
  *                                                                *
@@ -30,7 +30,7 @@ unsigned long get_difficulty_file(FILE *file_temp)
  * GET_BLOCK_NB_FILE *                                            *
  *********************                                            *
  *                                                                *
- *	Récupère le nombre de block dans le fichier (file_temp)       *
+ *  Récupère le nombre de block dans le fichier (file_temp)       *
  *	                                                              *
  *  Return : unsigned long                                        *
  *                                                                *

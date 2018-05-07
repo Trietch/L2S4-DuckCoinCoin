@@ -10,8 +10,8 @@
  * JSON_EXPORT *                                                  *
  ***************                                                  *
  *	                                                              *
- *	Exporte la blockchain (b) dans le format JSON dans le         *
- *	fichier (JSON_NAME).                                          *
+ *  Exporte la blockchain (b) dans le format JSON dans le         *
+ *  fichier (JSON_NAME).                                          *
  *	                                                              *
  *  Return : void                                                 *
  *                                                                *

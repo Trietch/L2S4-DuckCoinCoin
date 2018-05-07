@@ -21,9 +21,9 @@ int main(int argc, char *argv[])
 	unsigned long block_nb;
 	Blockchain *b;
 	unsigned long transaction_nb;
-
 	if ( argc != 4 && argc != 5 && argc != 6 && argc != 2 )
 	{
+		/* Mauvais arguments */
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG\n");
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_NB \n");
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_TRANSACTION_NB TRANSACTION_TO_CHEAT_NB \n");
@@ -32,6 +32,7 @@ int main(int argc, char *argv[])
 	}
 	if ( argc == 2 )
 	{
+		/* Lecture de la blockchain avec un fichier JSON */
 		FILE *file_temp = fopen(JSON_TEMP, "r");
 		get_json_value(JSON_NAME);
 		difficulty = get_difficulty_file(file_temp);
@@ -63,11 +64,13 @@ int main(int argc, char *argv[])
 
 	if ( argc == 5 )
 	{
+		/* Cheater de block */
 		block_cheater(b, atoi(argv[4]));
 		check_validity(b);
 	}
 	else if ( argc == 6 )
 	{
+		/* Cheater de transaction */
 		transaction_cheater(b, atoi(argv[4]), atoi(argv[5]));
 		check_validity(b);
 	}

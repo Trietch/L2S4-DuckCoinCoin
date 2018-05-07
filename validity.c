@@ -10,10 +10,10 @@
  * CHECK_VALIDITY *                                               *
  ******************                                               *
  *	                                                              *
- *	Verifie la validité des blocks de la blockchain (b).          *
- *	( Verifie la présence d'un block genesis, que les hash        *
- *	soient valides, que les précédent hash aussi et de même       *
- *	pour le merkle root.                                          *
+ *  Verifie la validité des blocks de la blockchain (b).          *
+ *  ( Verifie la présence d'un block genesis, que les hash        *
+ *  soient valides, que les précédent hash aussi et de même       *
+ *  pour le merkle root.                                          *
  *	                                                              *
  *  Return : bool                                                 *
  *                                                                *
