@@ -9,6 +9,22 @@
 #include "defines.h"
 #include "merkle_tree.h"
 
+
+/******************************************************************
+ * STRUCT _BLOCK (aka BLOCK) *                                    *
+ *****************************                                    *
+ *                                                                *
+ * 	transaction_list    : Liste des transactions                  *
+ * 	next                : Pointeur du prochain Block              *
+ * 	prev_hash           : String du hash du Block précédent       *
+ * 	hash                : String du hash du Block                 *
+ * 	timestamp           : String de la date actuelle              *
+ * 	index               : Numéro du Block                         *
+ * 	nonce               : Nonce du Block (utilisé pour le minage) *
+ * 	number_transactions : Nombre de transactions dans le Block    *
+ *                                                                *
+ ******************************************************************/
+
 typedef struct _Block
 {
 	Transaction **transaction_list;
@@ -22,29 +38,68 @@ typedef struct _Block
 	unsigned long number_transactions;
 } Block;
 
+
+/******************************************************************
+ * GETTIMESTAMP *                                                 *
+ ****************                                                 *
+ *	                                                              *
+ *	Retourne une chaine de caractères contenant la date actuelle. *
+ *	                                                              *
+ *  Return : char*                                                *
+ *                                                                *
+ ******************************************************************/
+
 char *getTimeStamp()
 {
 	char *str = malloc(128*sizeof(char));
+	if ( !str )
+		error_report(54, ERR_MALLOC);
 	time_t t = time(NULL);
 	struct tm *p = localtime(&t);
 	strftime(str, 128, "%c", p);
 	return str;
 }
 
+
+/******************************************************************
+ * BLOCK_TO_STRING *                                              *
+ *******************                                              *
+ *	                                                              *
+ *	Crée une chaine de caractères (string_block) en concatenant   *
+ *	tout les champs du block (block).                             *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
+
 void block_to_string(Block *block, char *string_block)
 {
 	char *string = calloc(HASH_SIZE*3, sizeof(char));
 	if ( !string )
-		error_report(26, ERR_MALLOC);
+		error_report(77, ERR_MALLOC);
 	if ( sprintf(string+strlen(string), "%s%s%lu%s%lu%lu", block->prev_hash, block->hash_merkle_root, block->index, block->timestamp, block->nonce, block->number_transactions) < 1 )
-		error_report(29, ERR_SPRINTF);
+		error_report(80, ERR_SPRINTF);
 	strcpy(string_block, string);
 	free(string);
 }
 
+
+/******************************************************************
+ * BLOCK_CREATE *                                                 *
+ ****************                                                 *
+ *	                                                              *
+ *	Initialise la structure de données Block avec les champs      *
+ *	données en entrée et en en calculants (les hashs).            *
+ *	                                                              *
+ *  Return : Block*                                               *
+ *                                                                *
+ ******************************************************************/
+
 Block *block_create(unsigned long index, char *prev_hash, Transaction **transaction_list, unsigned long transaction_nb)
 {
 	Block *block = calloc(1, sizeof(struct _Block));
+	if ( !block )
+		error_report(100, ERR_MALLOC);
 	block->index = index;
 	block->timestamp = getTimeStamp();
 	block->prev_hash = prev_hash;
@@ -54,14 +109,38 @@ Block *block_create(unsigned long index, char *prev_hash, Transaction **transact
 	block->hash_merkle_root = get_merkle_root(transaction_list, transaction_nb);
 	block->hash = malloc(HASH_SIZE*sizeof(char));
 	if ( !block->hash )
-		error_report(48, ERR_MALLOC);
+		error_report(110, ERR_MALLOC);
 	return block;
 }
+
+
+/******************************************************************
+ * BLOCK_SIGN_HASH *                                              *
+ *******************                                              *
+ *	                                                              *
+ *	Met le hash (hash) dans le champ hash du block (b).           *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void block_sign_hash(Block *b, char *hash)
 {
 	b->hash = hash;
 }
+
+
+/******************************************************************
+ * IS_GOOD_HASH *                                                 *
+ ****************                                                 *
+ *	                                                              *
+ *	Verifie que le hash (hash) respecte bien la difficulté        * 
+ *	(difficulty). La fonction verifie donc si il y a n            *
+ *	(difficulty) charactère '0' d'affilé au debut du hash.        *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
 
 bool is_good_hash(char *hash, unsigned long difficulty)
 {
@@ -73,6 +152,18 @@ bool is_good_hash(char *hash, unsigned long difficulty)
 	return true;
 }
 
+
+/******************************************************************
+ * GET_LAST_BLOCK *                                               *
+ ******************                                               *
+ *	                                                              *
+ *	Retourne le premier block qui n'a pas de prochain block à     *
+ *	partir du block (block).                                      *
+ *	                                                              *
+ *  Return : Block*                                               *
+ *                                                                *
+ ******************************************************************/
+
 Block *get_last_block(Block *block)
 {
 	Block **p_block = &block;
@@ -82,9 +173,23 @@ Block *get_last_block(Block *block)
 			return *p_block;	
 		p_block = &(*p_block)->next;
 	}
-	error_report(74, ERR_SHOULD_NOT_BE_HERE);
+	error_report(176, ERR_SHOULD_NOT_BE_HERE);
 	return NULL;
 }
+
+
+/******************************************************************
+ * BLOCK_ADD *                                                    *
+ *************                                                    *
+ *	                                                              *
+ *	Ajoute un block au block (block), ce nouveau block ayant      *
+ *	n (transaction_nb) transactions qui sont (transaction_list).  *
+ *	Cherche une bonne nonce pour le block pour avoir un hash      *
+ *	valide avec la difficulté (difficulty).                       *
+ *	                                                              *
+ *  Return : Block*                                               *
+ *                                                                *
+ ******************************************************************/
 
 Block *block_add(Block *block, unsigned long difficulty, Transaction **transaction_list, unsigned long transaction_nb)
 {
@@ -93,8 +198,8 @@ Block *block_add(Block *block, unsigned long difficulty, Transaction **transacti
 	unsigned int i = 0;
 	char *string_block = malloc((HASH_SIZE*sizeof(char))*2+(sizeof(unsigned long)*4));
 	char *hash = malloc(HASH_SIZE*sizeof(char));
-	if ( !hash )
-		error_report(82, ERR_MALLOC);
+	if ( !hash || !string_block )
+		error_report(199, ERR_MALLOC);
 	while ( *p_block )
 	{
 		if ( !(*p_block)->next )
@@ -114,14 +219,40 @@ Block *block_add(Block *block, unsigned long difficulty, Transaction **transacti
 	block_sign_hash(*p_block, hash);
 	if ( *p_block )
 		return block;
-	error_report(104, ERR_SHOULD_NOT_BE_HERE);
+	error_report(224, ERR_SHOULD_NOT_BE_HERE);
 	return NULL;
 }
+
+
+/******************************************************************
+ * IS_GENESIS *                                                   *
+ **************                                                   *
+ *	                                                              *
+ *	La fonction regarde si le champ merkle hash du block (b) est  * 
+ *	"genesis" ou pas.                                             *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
 
 bool is_genesis(Block *b)
 {
 	return !strcmp(b->hash_merkle_root, "genesis");
 }
+
+
+/******************************************************************
+ * IS_PREV_HASH_VALID *                                           *
+ **********************                                           *
+ *	                                                              *
+ *	Compare le champ prev hash du prochain block du block (b)     * 
+ *	avec le champ hash du block (b).                              *
+ *	S'ils sont identiques, alors le hash est valide et la         *
+ *	fonction retourne true.                                       *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
 
 bool is_prev_hash_valid(Block *b)
 {
@@ -144,6 +275,20 @@ bool is_prev_hash_valid(Block *b)
 	return true;
 }
 
+
+/******************************************************************
+ * IS_MERKLE_ROOT_VALID *                                         *
+ ************************                                         *
+ *	                                                              *
+ *	Compare le champ merkle hash du block (b) avec le merkle hash *
+ *	que la fonction calcule du block (b).                         *
+ *	S'ils sont identiques, alors le hash est valide et la         *
+ *	fonction retourne true.                                       *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
+
 bool is_merkle_root_valid(Block *b)
 {
 	if ( show_log )
@@ -164,6 +309,19 @@ bool is_merkle_root_valid(Block *b)
 	return true;
 }
 
+
+/******************************************************************
+ * IS_MY_HASH_VALID *                                             *
+ ********************                                             *
+ *	                                                              *
+ *	Compare le champ hash du block (b) avec le hash que la        *
+ *	fonction calcule du block (b). S'ils sont identiques, alors   *
+ *	le hash est valide et la fonction retourne true.              *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
+
 bool is_my_hash_valid(Block *b)
 {
 	if ( show_log )
@@ -171,11 +329,13 @@ bool is_my_hash_valid(Block *b)
 	Block *p_block = b;
 	char *string_block = malloc((HASH_SIZE*sizeof(char))*2+(sizeof(unsigned long)*4)+50);
 	char *hash = malloc(HASH_SIZE*sizeof(char));
+	if ( !string_block || !hash )
+		error_report(332, ERR_MALLOC);
 	while ( p_block )
 	{
 		block_to_string(p_block, string_block);
 		if ( !hash )
-			error_report(116, ERR_MALLOC);
+			error_report(340, ERR_MALLOC);
 		sha256ofString((BYTE *)string_block, hash);
 		if ( strcmp(p_block->hash, hash) )
 		{
@@ -189,6 +349,18 @@ bool is_my_hash_valid(Block *b)
 	return true;
 }
 
+
+/******************************************************************
+ * GET_ITH_BLOCK *                                                *
+ *****************                                                *
+ *	                                                              *
+ *	Retourne le pointeur du n-ième (num) block a partir du block  *
+ *	(b).                                                          *
+ *	                                                              *
+ *  Return : Block*                                               *
+ *                                                                *
+ ******************************************************************/
+
 Block *get_ith_block(Block *b, unsigned long num)
 {
 	Block *p_block = b;
@@ -199,6 +371,17 @@ Block *get_ith_block(Block *b, unsigned long num)
 	return p_block;	
 }
 
+
+/******************************************************************
+ * BLOCK_DEL_ALL_TRANSACTION *                                    *
+ *****************************                                    *
+ *	                                                              *
+ *	Supprime toutes les transactions du block (b).                *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
+
 void block_del_all_transaction(Block *b)
 {
 	for ( unsigned long i = 0; i < b->number_transactions-1; ++i )
@@ -207,6 +390,17 @@ void block_del_all_transaction(Block *b)
 	}
 	free(b->transaction_list);	
 }
+
+
+/******************************************************************
+ * BLOCK_ALL_DELETE *                                             *
+ ********************                                             *
+ *	                                                              *
+ *	Supprime tout les blocks a partir du block (b).               *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void block_all_delete(Block *b)
 {
@@ -229,6 +423,17 @@ void block_all_delete(Block *b)
 	//block_del_all_transaction(b);
 }
 
+
+/******************************************************************
+ * BLOCK_DEL_TRANSACTION *                                        *
+ *************************                                        *
+ *	                                                              *
+ *	Supprime la n-ième (trans_nb) transactions du block (b).      *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
+
 void block_del_transaction(Block *b, unsigned long trans_nb)
 {
 	for ( unsigned long i = trans_nb; i < b->number_transactions-1; ++i )
@@ -236,13 +441,39 @@ void block_del_transaction(Block *b, unsigned long trans_nb)
 		b->transaction_list[i] = b->transaction_list[i+1];
 	}
 	(b->number_transactions)--;
+	free(b->transaction_list[b->number_transactions]);
 	b->hash_merkle_root = get_merkle_root(b->transaction_list, b->number_transactions);
 }
+
+/******************************************************************
+ * BLOCK_JUMP *                                                   *
+ **************                                                   *
+ *	                                                              *
+ *  Modifie le pointeur du prochain block du block (b) en le      *
+ *  remplaçant par le prochain block du prochain block.	          *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void block_jump_next(Block *b)
 {
 	b->next = b->next->next;
 }
+
+
+/******************************************************************
+ * BLOCKCHAIN_REBUILD *                                           *
+ **********************                                           *
+ *                                                                *
+ *  A partir du block (b), recalcule le hash et le précédent hash *
+ *  des blocks suivants (lui compris) avec la difficulté donnée   *
+ *  (difficulty). Il affiche aussi l'index du bloc qu'il vient de *
+ *  trouver sur le nombre total de blocks (nb_blocks).            *
+ *	                                                              *
+ *  Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void blockchain_rebuild(Block *b, unsigned long difficulty, unsigned long nb_blocks)
 {
@@ -256,6 +487,8 @@ void blockchain_rebuild(Block *b, unsigned long difficulty, unsigned long nb_blo
 			(p_block->next->index)--;
 		do
 		{
+			if ( !hash || !string_block )
+				error_report(483, ERR_MALLOC);
 			(p_block->nonce)++;
 			block_to_string(p_block, string_block);
 			sha256ofString((BYTE *)string_block, hash);
@@ -270,12 +503,26 @@ void blockchain_rebuild(Block *b, unsigned long difficulty, unsigned long nb_blo
 	string_block = malloc((HASH_SIZE*sizeof(char))*2+(sizeof(unsigned long)*4));
 	do
 	{
+		if ( !string_block )
+			error_report(503, ERR_MALLOC);
 		(p_block->nonce)++;
 		block_to_string(p_block, string_block);
 		sha256ofString((BYTE *)string_block, hash);
 	} while ( !is_good_hash(hash, difficulty) );	
 	strcpy(p_block->hash, hash);
 }
+
+
+/******************************************************************
+ * BLOCK_PRINT *                                                  *
+ ***************                                                  *
+ *                                                                *
+ *	Affiche les champs de tout les blocks à partir du block en    *
+ *	entrée (block).                                               *
+ *	                                                              *
+ *	Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void block_print(Block *block)
 {
@@ -300,6 +547,18 @@ void block_print(Block *block)
 	}
 	printf("\n");
 }
+
+
+/******************************************************************
+ * EXPORT_BLOCK *                                                 *
+ ****************                                                 *
+ *                                                                *
+ *	Convertis les n (nb_blocks) blocks (block) en JSON et         *
+ *	l'écrit dans le fichier (file).                               *
+ *	                                                              *
+ *	Return : void                                                 *
+ *                                                                *
+ ******************************************************************/
 
 void export_block(FILE *file, Block *block, unsigned long nb_block)
 {

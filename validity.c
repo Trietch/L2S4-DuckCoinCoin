@@ -5,6 +5,20 @@
 #include "blockchain.h"
 #include "block.h"
 
+
+/******************************************************************
+ * CHECK_VALIDITY *                                               *
+ ******************                                               *
+ *	                                                              *
+ *	Verifie la validité des blocks de la blockchain (b).          *
+ *	( Verifie la présence d'un block genesis, que les hash        *
+ *	soient valides, que les précédent hash aussi et de même       *
+ *	pour le merkle root.                                          *
+ *	                                                              *
+ *  Return : bool                                                 *
+ *                                                                *
+ ******************************************************************/
+
 bool check_validity(Blockchain *b)
 {
 	Block *block = get_first_block(b);

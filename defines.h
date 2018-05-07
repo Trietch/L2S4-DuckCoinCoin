@@ -19,7 +19,10 @@
 #define ERR_NO					1
 #define ERR_SPRINTF				2
 #define ERR_MALLOC				4
-#define ERR_SHOULD_NOT_BE_HERE	8 
+#define ERR_SHOULD_NOT_BE_HERE	8
+#define ERR_FILE_OPEN			16
+#define ERR_FILE_CLOSE			32
+#define ERR_FGETS 				64	
 
 
 

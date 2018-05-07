@@ -74,6 +74,5 @@ int main(int argc, char *argv[])
 	json_export(b);
 	if ( argc != 6 ) //Erreur si free alors que transacations cheated
 		blockchain_free(b);
-	free(b);
 	return 0;
 }
