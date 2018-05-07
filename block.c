@@ -217,6 +217,7 @@ Block *block_add(Block *block, unsigned long difficulty, Transaction **transacti
 	if ( show_log )
 		printf("%sBLOCK: [%lu] FOUND AFTER %lu TRIES WITH THE HASH : %.*s%s%s%s%s\n", BRED, (*p_block)->index, (*p_block)->nonce, (int)difficulty, hash, WHI, BYEL, hash+strlen(hash)-HASH_SIZE+difficulty+1, WHI);
 	block_sign_hash(*p_block, hash);
+	free(string_block);
 	if ( *p_block )
 		return block;
 	error_report(224, ERR_SHOULD_NOT_BE_HERE);
@@ -294,9 +295,10 @@ bool is_merkle_root_valid(Block *b)
 	if ( show_log )
 		printf("Checking blocks merkle root.. ");
 	Block *p_block = b;
+	char *generated_merkle_root;
 	while ( p_block )
 	{
-		char *generated_merkle_root = get_merkle_root(p_block->transaction_list, p_block->number_transactions);
+		generated_merkle_root = get_merkle_root(p_block->transaction_list, p_block->number_transactions);
 		if ( strcmp(p_block->hash_merkle_root, generated_merkle_root) )
 		{
 			printf("%sNOT OK! >:(%s\n", BRED, WHI);
@@ -304,6 +306,8 @@ bool is_merkle_root_valid(Block *b)
 		}
 		p_block = p_block->next;
 	}
+	if ( generated_merkle_root )
+		free(generated_merkle_root);
 	if ( show_log )	
 		printf("%sOK!%s\n", BGRN, WHI);
 	return true;
@@ -340,10 +344,14 @@ bool is_my_hash_valid(Block *b)
 		if ( strcmp(p_block->hash, hash) )
 		{
 			printf("%sNOT OK! >:(%s\n", BRED, WHI);
+			free(string_block);
+			free(hash);
 			return false;
 		}
 		p_block = p_block->next;
 	}
+	free(string_block);
+	free(hash);
 	if ( show_log )
 		printf("%sOK!%s\n", BGRN, WHI);
 	return true;
@@ -384,7 +392,7 @@ Block *get_ith_block(Block *b, unsigned long num)
 
 void block_del_all_transaction(Block *b)
 {
-	for ( unsigned long i = 0; i < b->number_transactions-1; ++i )
+	for ( unsigned long i = 0; i <= b->number_transactions-1; ++i )
 	{
 		free(b->transaction_list[i]);
 	}
@@ -408,19 +416,14 @@ void block_all_delete(Block *b)
 	{
 		block_all_delete(b->next);
 	}
-	
+	free(b->hash);
+	free(b->timestamp);
 	if ( b->index != 0 )
 	{
 		block_del_all_transaction(b);
-		free(b->hash);
 		free(b->hash_merkle_root);
-		free(b);
 	}
-	/*free(b->hash);
-	free(b->prev_hash);
-	free(b->hash_merkle_root);
-	free(b);*/
-	//block_del_all_transaction(b);
+	free(b);
 }
 
 
@@ -563,6 +566,9 @@ void block_print(Block *block)
 void export_block(FILE *file, Block *block, unsigned long nb_block)
 {
 	Block *b;
+	char *string = malloc(31*sizeof(char));
+	if ( !string )
+		error_report(569, ERR_MALLOC);
 	for ( unsigned long i = nb_block; i > 0; --i )
 	{
 		b = get_ith_block(block, i);
@@ -574,7 +580,8 @@ void export_block(FILE *file, Block *block, unsigned long nb_block)
 		fprintf(file, "\"transactions\": [");
 		for ( unsigned long j = 0; j < b->number_transactions; ++j )
 		{
-			fprintf(file, "\"%s\"", transaction_to_string(b->transaction_list[j]));
+			transaction_to_string(b->transaction_list[j], string);
+			fprintf(file, "\"%s\"", string);
 			if ( j != b->number_transactions-1 )
 				fprintf(file, ",");
 		}
@@ -585,6 +592,7 @@ void export_block(FILE *file, Block *block, unsigned long nb_block)
 		fprintf(file, "}");
 		if ( i > 1 )
 			fprintf(file, ",");
-	}	
+	}
+	free(string);
 }
 

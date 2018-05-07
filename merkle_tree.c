@@ -108,15 +108,20 @@ void queue_add(Queue *q, char *data)
 Queue *generate_queue(Transaction **transaction_list, unsigned long transaction_nb, char **hash)
 {
 	Queue *q = queue_create();
+	char *string = malloc(31*sizeof(char));
+	if ( !string )
+		error_report(111, ERR_MALLOC);
 	for ( unsigned long i = 0; i < transaction_nb; ++i )
 	{
 		if ( !(hash[i]) )
 			error_report(113, ERR_MALLOC);
-		sha256ofString((BYTE *)transaction_to_string(transaction_list[i]), hash[i]);
+		transaction_to_string(transaction_list[i], string);
+		sha256ofString((BYTE *)string, hash[i]);
 		queue_add(q, hash[i]);
 	}
 	if ( transaction_nb%2 == 1 )
 		queue_add(q, hash[transaction_nb-1]);
+	free(string);
 	return q;
 }
 
@@ -187,8 +192,8 @@ char *generate_merkle_hash(Queue *q)
 
 
 /******************************************************************
- * GENERATE_MERKLE_HASH *                                         *
- ************************                                         *
+ * GET_MERKLE_ROOT *                                              *
+ *******************                                              *
  *                                                                *
  *	Retourne le merkle hash de la liste des transactions          *
  *	(transaction_list).                                           *
@@ -202,7 +207,7 @@ char *get_merkle_root(Transaction **transaction_list, unsigned long transaction_
 	if ( transaction_nb > 0 )
 	{
 		char **hash = calloc(transaction_nb, sizeof(char*));
-		char *merkle_hash = malloc(65*sizeof(char));
+		char *merkle_hash = malloc(HASH_SIZE*sizeof(char));
 		if ( !hash || !merkle_hash )
 			error_report(204, ERR_MALLOC);
 		for ( unsigned long i = 0; i < transaction_nb; ++i )

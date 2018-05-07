@@ -127,7 +127,7 @@ void get_json_value(char *filename)
                 fprintf(stderr, "Memory error: unable to allocate %d bytes\n", file_size);
                 exit(-1);
         }
-
+		printf("%s\n", filename);
         fp = fopen(filename, "rt");
         if (fp == NULL) {
                 fprintf(stderr, "Unable to open %s\n", filename);

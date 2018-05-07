@@ -55,6 +55,7 @@ Blockchain *blockchain_create(unsigned long difficulty)
 	block_to_string(blockchain->first_block, string_block);
 	sha256ofString((BYTE *)string_block, hash);
 	block_sign_hash(blockchain->first_block, hash);
+	free(string_block);
 	return blockchain;
 }
 

@@ -948,7 +948,7 @@ e_failed:
 
 json_value * json_parse (const json_char * json, size_t length)
 {
-   json_settings settings;
+   json_settings settings = { 0 };
    return json_parse_ex (&settings, json, length, 0);
 }
 
@@ -1004,7 +1004,7 @@ void json_value_free_ex (json_settings * settings, json_value * value)
 
 void json_value_free (json_value * value)
 {
-   json_settings settings;
+   json_settings settings = { 0 };
    settings.mem_free = (void(*)(void *, void *))default_free;
    json_value_free_ex (&settings, value);
 }

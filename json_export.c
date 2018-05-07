@@ -27,6 +27,6 @@ void json_export(Blockchain *b)
 	export_block(file, get_first_block(b), get_number_blocks(b));
 	fprintf(file, "]}");
 	printf("Blockchain exported as %s\n", JSON_NAME);
-	if ( fclose(file) )
+	if ( fclose(file) == EOF )
 		error_report(30, ERR_FILE_CLOSE);
 }

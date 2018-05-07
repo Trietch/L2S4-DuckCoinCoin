@@ -24,6 +24,8 @@ $(EXEC): $(OBJ)
 
 clean:
 	rm -rf *.o
+	rm -rf *.json
+	rm -rf duckcoincoin
 
 mrproper: clean
 	rm -rf $(EXEC)

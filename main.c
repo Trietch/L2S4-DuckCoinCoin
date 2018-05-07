@@ -22,13 +22,13 @@ int main(int argc, char *argv[])
 	Blockchain *b;
 	unsigned long transaction_nb;
 
-	if ( argc != 4 && argc != 5 && argc != 6 )
+	if ( argc != 4 && argc != 5 && argc != 6 && argc != 2 )
 	{
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG\n");
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_NB \n");
 		printf("Usage: duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_TRANSACTION_NB TRANSACTION_TO_CHEAT_NB \n");
 		printf("Usage: duckcoincoin JSON_FILE\n");
-		exit(0);
+		exit(-1);
 	}
 	if ( argc == 2 )
 	{
@@ -38,8 +38,10 @@ int main(int argc, char *argv[])
 		block_nb = get_block_nb_file(file_temp);
 		b = blockchain_create(difficulty);
 		fclose(file_temp);
+		printf("Blockchain créee (sans blocks) avec une difficulté de %lu\n", difficulty);
+		printf("Le nombre de block aurait dû etre de %lu\n", block_nb);
 		return 0;
-		/* Non fini */
+		/* Je n'ai récupéré que la difficulté et le nombre de block de la blockchain */
 	}
 	
 	difficulty = atoi(argv[1]);

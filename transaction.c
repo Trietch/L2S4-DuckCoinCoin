@@ -131,12 +131,8 @@ size_t get_transaction_size()
  *                                                                *
  ******************************************************************/
 
-char *transaction_to_string(Transaction *transaction)
+void transaction_to_string(Transaction *transaction, char *string)
 {
-	char *string = malloc(31*sizeof(char));
-	if ( !string )
-		error_report(136, ERR_MALLOC);
 	if ( sprintf(string, "Source-Destination :%lu", transaction->amount) < 1 )
-		error_report(139, ERR_SPRINTF);
-	return string;
+		error_report(136, ERR_SPRINTF);
 }
