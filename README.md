@@ -30,6 +30,7 @@ LOG | **0 ou 1** | *Afficher ou non des informations*
 BLOCK_TO_CHEAT | **unsigned long** | *Numéro du block à cheater*
 BLOCK_TO_CHEAT_TRANSACTION_NB | **unsigned long** | *Numéro du block à cheater une transaction*
 TRANSACTION_TO_CHEAT_NB | **unsigned long** | *Numéro de la transaction à cheater*
+JSON_FILE | **String** | *Chemin du fichier JSON*
 
 ---
 👍 Merci à 
