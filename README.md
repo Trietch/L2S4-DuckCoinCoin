@@ -1,43 +1,43 @@
 # L2S4-DuckCoinCoin
-## L2 Informatique Université Paul Sabatier
-#### Auteur/Etudiant : Tristan Marrec :shipit: | Tuteur : Stergos Afantenos
+## Second year computer student at Paul Sabatier University :fr:
+#### Student : Tristan Marrec :shipit: | Tutor : Stergos Afantenos
 
-✔️  Génération d'une blockchain
+✔️  Blockchain generation
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG
 ```
 
-✔️  Génération d'une blockchain avec cheating d'un block
+✔️  Blockchain generation with a cheating block
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_NB
 ```
 
-✔️  Génération d'une blockchain avec cheating d'une transaction
+✔️  Blockchain generation with a cheating transaction
 ```
 ./duckcoincoin DIFFICULTY BLOCKS_NB LOG BLOCK_TO_CHEAT_TRANSACTION_NB TRANSACTION_TO_CHEAT_NB
 ```
-🚧 (non fini) Génération d'une blockchain a partir d'un fichier JSON
+🚧 (unfinished) Blockchain generation from a JSON file
 ```
 ./duckcoincoin JSON_FILE
 ```
 ---
 
-Entrée | Type | Définition 
+Input | Type | Info 
 --- | --- | ---
-DIFFICULTY | **unsigned long** | *Difficulté de la blockchain*
-BLOCKS_NB | **unsigned long** | *Nombre de blocks de la blockchain*
-LOG | **0 ou 1** | *Afficher ou non des informations* 
-BLOCK_TO_CHEAT | **unsigned long** | *Numéro du block à cheater*
-BLOCK_TO_CHEAT_TRANSACTION_NB | **unsigned long** | *Numéro du block à cheater une transaction*
-TRANSACTION_TO_CHEAT_NB | **unsigned long** | *Numéro de la transaction à cheater*
-JSON_FILE | **String** | *Chemin du fichier JSON*
+DIFFICULTY | **unsigned long** | *Blockchain difficulty*
+BLOCKS_NB | **unsigned long** | *Number of blocks in the blockchain*
+LOG | **0 ou 1** | *Print log* 
+BLOCK_TO_CHEAT | **unsigned long** | *Number of the cheating block*
+BLOCK_TO_CHEAT_TRANSACTION_NB | **unsigned long** | *Number of the cheating transaction block*
+TRANSACTION_TO_CHEAT_NB | **unsigned long** | *Number of the cheating transaction in the block*
+JSON_FILE | **String** | *JSON file path*
 
 ---
-👍 Merci à 
+👍 Thanks to
 - Brad Conte [brad@bradconte.com](brad@bradconte.com)
 - udp [@github](https://github.com/udp/json-parser)
 
-pour respectivement
+respectively for
 - sha256.h sha256.c sha256_utils.h sha256_utils.c
 - json.c json.h test_json.c libjsonparser.a
 
